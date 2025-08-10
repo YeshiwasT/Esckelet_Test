@@ -4,10 +4,9 @@ import '../bloc/country_bloc.dart';
 import '../bloc/country_event.dart';
 import '../bloc/country_state.dart';
 import '../widgets/country_card.dart';
-import 'detail_screen.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +26,9 @@ class HomeScreen extends StatelessWidget {
           builder: (context, state) {
             if (state is CountryLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is CountryLoaded) {
+            } else if (state is FavoriteLoaded) {
               return Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Search countries',
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (query) {
-                        context.read<CountryBloc>().add(
-                          LoadCountries(query: query),
-                        );
-                      },
-                    ),
-                  ),
                   Expanded(
                     child: GridView.builder(
                       padding: const EdgeInsets.all(8.0),
@@ -57,18 +41,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                       itemCount: state.countries.length,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => DetailScreen(
-                                  country: state.countries[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: CountryCard(country: state.countries[index]),
-                        );
+                        return CountryCard(country: state.countries[index]);
                       },
                     ),
                   ),

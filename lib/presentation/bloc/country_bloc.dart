@@ -11,6 +11,8 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
 
   CountryBloc({required this.countryRepository}) : super(CountryInitial()) {
     on<LoadCountries>(_onLoadCountries);
+    on<LodeFavorite>(_onLoadFavorite);
+
     on<ToggleFavorite>(_onToggleFavorite);
     on<NavigateToDetail>(_onNavigateToDetail);
   }
@@ -32,6 +34,21 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
             )
             .toList();
       }
+
+      emit(CountryLoaded(countries));
+    } catch (e) {
+      emit(CountryError('Failed to load countries: $e'));
+    }
+  }
+
+  FutureOr<void> _onLoadFavorite(
+    LodeFavorite event,
+    Emitter<CountryState> emit,
+  ) async {
+    emit(CountryLoading());
+    try {
+      List<CountryEntity> countries = await countryRepository
+          .getFavoriteCountries();
 
       emit(CountryLoaded(countries));
     } catch (e) {

@@ -33,10 +33,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Countries App',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: BlocProvider(
-        create: (context) =>
-            CountryBloc(countryRepository: repository)..add(LoadCountries()),
-        child: const HomeScreen(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) =>
+                CountryBloc(countryRepository: repository)
+                  ..add(LoadCountries()),
+          ),
+        ],
+        child: HomeScreen(),
       ),
     );
   }

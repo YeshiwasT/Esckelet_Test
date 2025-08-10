@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/country_entity.dart';
 import '../bloc/country_bloc.dart';
 import '../bloc/country_event.dart';
+import '../pages/detail_screen.dart';
 
 class CountryCard extends StatelessWidget {
   final CountryEntity country;
@@ -11,18 +12,19 @@ class CountryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        BlocProvider.of<CountryBloc>(context).add(NavigateToDetail(country));
-      },
-      child: Card(
+    return Card(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16.0),
               child: Image.network(
                 country.flagUrl,
-                width: double.infinity,
+                width: 82,
+                height: 62,
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) =>
                     const Icon(Icons.flag),
@@ -31,7 +33,7 @@ class CountryCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     country.name,
@@ -39,7 +41,7 @@ class CountryCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 20),
                   Text('Population: ${country.population}'),
                   const SizedBox(height: 4),
                   // IconButton(

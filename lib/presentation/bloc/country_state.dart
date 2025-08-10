@@ -21,6 +21,15 @@ class CountryLoaded extends CountryState {
   List<Object> get props => [countries];
 }
 
+class FavoriteLoaded extends CountryState {
+  final List<CountryEntity> countries;
+
+  const FavoriteLoaded(this.countries);
+
+  @override
+  List<Object> get props => [countries];
+}
+
 class CountryError extends CountryState {
   final String message;
 

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/country_entity.dart';
+import '../bloc/country_bloc.dart';
+import '../bloc/country_event.dart';
 
 class DetailScreen extends StatelessWidget {
   final CountryEntity country;
@@ -9,7 +12,23 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(country.name)),
+      appBar: AppBar(
+        title: Text(country.name),
+        actions: [
+          IconButton(
+            icon: Icon(
+              country.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: country.isFavorite ? Colors.red : null,
+            ),
+            onPressed: () {
+              context.read<CountryBloc>().add(ToggleFavorite(country));
+              // BlocProvider.of<CountryBloc>(
+              //   context,
+              // ).add(ToggleFavorite(country));
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

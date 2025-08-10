@@ -23,6 +23,10 @@ class ToggleFavorite extends CountryEvent {
   List<Object> get props => [country];
 }
 
+class LodeFavorite extends CountryEvent {
+  const LodeFavorite();
+}
+
 class NavigateToDetail extends CountryEvent {
   final CountryEntity country;
 
